@@ -9,18 +9,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zerofood.data.Item
 import com.example.zerofood.ui.screens.ItemList
+import com.example.zerofood.ui.screens.LoginSignScreen
+import com.example.zerofood.ui.screens.MainScreen
+import com.example.zerofood.ui.theme.ZeroFoodTheme
+import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
         setContent {
-            MaterialTheme {
-                val sampleItems = listOf(
-                    Item("Camera", android.R.drawable.ic_menu_camera),
-                    Item("Gallery", android.R.drawable.ic_menu_gallery),
-                    Item("Delete", android.R.drawable.ic_menu_delete)
-                )
-                ItemList(items = sampleItems)
+            ZeroFoodTheme (dynamicColor = false) {
+                LoginSignScreen()
             }
         }
     }
