@@ -25,10 +25,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+import android.graphics.BitmapFactory
+import android.util.Base64
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Icon
+import androidx.compose.ui.graphics.asImageBitmap
+
 @Composable
-fun ItemCard(name: String, @DrawableRes imageRes: Int) {
+fun ItemCard(nome: String, quantidade: String, data: String, imagemBase64: String) {
+    // Decodifica a imagem Base64
+    val imageBitmap = try {
+        val imageBytes = Base64.decode(imagemBase64, Base64.DEFAULT)
+        val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        bitmap?.asImageBitmap()
+    } catch (e: Exception) {
+        null // Imagem inválida ou vazia
+    }
+
     Column(
-        modifier = Modifier.fillMaxWidth().padding(8.dp).width(140.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .width(140.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
@@ -38,41 +57,59 @@ fun ItemCard(name: String, @DrawableRes imageRes: Int) {
                 .background(Color.LightGray),
             contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(id = imageRes),
-                contentDescription = name,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.size(120.dp).clip(RoundedCornerShape(12.dp))
-            )
+            if (imageBitmap != null) {
+                Image(
+                    bitmap = imageBitmap,
+                    contentDescription = nome,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(120.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                )
+            } else {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Imagem não disponível",
+                    tint = Color.Gray,
+                    modifier = Modifier.size(64.dp)
+                )
+            }
         }
+
         Spacer(modifier = Modifier.height(8.dp))
+
         Box(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
             contentAlignment = Alignment.CenterStart
         ) {
             Column {
                 Text(
-                    text = name,
-                    fontSize = 28.sp,
+                    text = nome,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Left
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Validade: 12/12/2023",
+                    text = "Validade: $data",
                     fontSize = 16.sp,
-                    textAlign = TextAlign.Left,
+                    textAlign = TextAlign.Left
                 )
             }
+
             Box(
-                modifier = Modifier.fillMaxWidth().padding(end = 8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 8.dp),
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Text(
-                    text = "000",
-                    fontSize = 30.sp,
+                    text = quantidade,
+                    fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Right,
+                    textAlign = TextAlign.Right
                 )
             }
         }

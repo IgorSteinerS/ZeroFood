@@ -1,0 +1,28 @@
+[
+  {
+    "elementType": "geometry",
+    "stylers": [
+      { "color": "#e0f2f1" }
+    ]
+  },
+  {
+    "elementType": "labels.text.fill",
+    "stylers": [
+      { "color": "#00695c" }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
+      { "color": "#a5d6a7" }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
+      { "color": "#c8e6c9" }
+    ]
+  }
+]
